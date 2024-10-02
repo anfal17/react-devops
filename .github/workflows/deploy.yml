@@ -31,7 +31,7 @@ jobs:
         host: your-ec2-public-ip
         username: ec2-user
         key: ${{ secrets.EC2_SSH_KEY }}
-        script: 
+        script: |
           # Stop and remove the existing container if it exists
           docker stop react-app || true
           docker rm react-app || true
