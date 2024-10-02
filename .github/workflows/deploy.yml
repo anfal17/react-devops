@@ -20,7 +20,7 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Docker image
-      run: docker build -t anfal17/react-app .
+      run: docker build -t anfal17/react-app:latest.1 .
 
     - name: Push Docker image to Docker Hub
       run: docker push anfal17/react-app:latest.1
