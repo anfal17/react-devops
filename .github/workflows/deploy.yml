@@ -1,0 +1,43 @@
+name: Deploy React App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build Docker image
+      run: docker build -t anfal17/react-app .
+
+    - name: Push Docker image to Docker Hub
+      run: docker push anfal17/react-app:latest.1
+
+    - name: SSH into EC2 and Deploy
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: your-ec2-public-ip
+        username: ec2-user
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: 
+          # Stop and remove the existing container if it exists
+          docker stop react-app || true
+          docker rm react-app || true
+
+          # Pull the latest image from Docker Hub
+          docker pull anfal17/react-app:latest.1
+
+          # Run the Docker container
+          docker run -d --name react-app -p 3000:5173 anfal17/react-app:latest.1
