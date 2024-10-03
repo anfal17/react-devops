@@ -31,7 +31,7 @@ jobs:
         host: 34.230.15.13
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
+        command: |
           docker stop react-app || true
           docker rm react-app || true
           docker pull anfal17/react-app:latest.5
