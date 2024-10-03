@@ -29,7 +29,7 @@ jobs:
       uses: appleboy/ssh-action@v0.1.5
       with:
         host: 34.230.15.13
-        username: ec2-user
+        username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
           # Stop and remove the existing container if it exists
