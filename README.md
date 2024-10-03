@@ -1,4 +1,7 @@
 iMPELEMENTING A CICD PILEINE ON THIS APPLICATION
+diagram made by anfal
+![cicd drawio (1)](https://github.com/user-attachments/assets/11bfb21f-d8bb-4920-b7eb-491b45724b10)
+
 ## dockerized react app
 ![image](https://github.com/user-attachments/assets/09e9fa3a-921d-49e8-9686-12ccec7242cd)
 
