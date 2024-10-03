@@ -20,15 +20,15 @@ jobs:
       run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Docker image
-      run: docker build -t anfal17/react-app:latest.2 .
+      run: docker build -t anfal17/react-app:latest.3 .
 
     - name: Push Docker image to Docker Hub
-      run: docker push anfal17/react-app:latest.2
+      run: docker push anfal17/react-app:latest.3
 
     - name: SSH into EC2 and Deploy
       uses: appleboy/ssh-action@v0.1.5
       with:
-        host: 18.212.141.204
+        host: 34.230.15.13
         username: ec2-user
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
@@ -37,7 +37,7 @@ jobs:
           docker rm react-app || true
 
           # Pull the latest image from Docker Hub
-          docker pull anfal17/react-app:latest.2
+          docker pull anfal17/react-app:latest.3
 
           # Run the Docker container
-          docker run -d --name react-app -p 3000:5173 anfal17/react-app:latest.2
+          docker run -d --name react-app -p 3000:5173 anfal17/react-app:latest.3
