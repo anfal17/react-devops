@@ -1,4 +1,4 @@
-name: Deploy  React App
+name: Deploy React App
 
 on:
   push:
@@ -25,19 +25,14 @@ jobs:
     - name: Push Docker image to Docker Hub
       run: docker push anfal17/react-app:latest.5
 
-    - name: SSH into EC2 and Deploy
-      uses: appleboy/ssh-action@v0.1.5
+    - name: Deploy to AWS EC2
+      uses: appleboy/scp-action@master
       with:
         host: 34.230.15.13
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          # Stop and remove the existing container if it exists
           docker stop react-app || true
           docker rm react-app || true
-
-          # Pull the latest image from Docker Hub
           docker pull anfal17/react-app:latest.5
-
-          # Run the Docker container
           docker run -d --name react-app -p 3000:5173 anfal17/react-app:latest.5
